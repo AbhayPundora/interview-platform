@@ -11,20 +11,3 @@ jobs:
     steps:
       - name: Trigger Render Deploy
         run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
-```
-
-**Flow**
-```
-You push to GitHub
-      ↓
-GitHub Actions triggers
-      ↓
-Render deploy hook called
-      ↓
-Render pulls latest code
-      ↓
-Runs build command
-      ↓
-Runs start command
-      ↓
-App is live
