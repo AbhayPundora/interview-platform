@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import "dotenv/config";
+import { connectDB } from "./lib/db.js";
 
 const app = express();
 
@@ -22,6 +23,16 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html")); // can also write path comma separated
   });
 }
-app.listen(process.env.PORT, () => {
-  console.log(`server is running on http://localhost:${process.env.PORT}`);
-});
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(process.env.PORT, () => {
+      console.log(`server is running on http://localhost:${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error("💥 Error starting the server", error);
+  }
+};
+
+startServer();
